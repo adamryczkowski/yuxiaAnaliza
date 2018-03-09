@@ -655,7 +655,7 @@ annotate_db<-function(dt, flag_only_fix_attributes=FALSE, kodowanieECpath='share
                                     valid_levels = as.integer(as.character(keys_dt$key_2003)),
                                     valid_varnames = paste0('cong_dis_',as.character(keys_dt$key_2003)),
                                     flag_remove_original_fields = TRUE)
-
+      browser()
       dt_2001<-conv_to_wide_from_odp(parallel_odp = fdt_2001, dt = cong_dis_2001_dt)
       rm(cong_dis_2001_dt)
       dt_2002a<-conv_to_wide_from_odp(parallel_odp = fdt_2002a, dt = cong_dis_2002a_dt)
@@ -721,7 +721,7 @@ annotate_db<-function(dt, flag_only_fix_attributes=FALSE, kodowanieECpath='share
 
   }
 
-  dt <- recode_wady(dt, flag_only_fix_attributes = flag_only_fix_attributes)
+  dt <- recode_wady(dt, flag_only_fix_attributes = flag_only_fix_attributes, kodowanieECpath = kodowanieECpath)
 
 
   if (!flag_only_fix_attributes) {
@@ -893,6 +893,7 @@ launch_conv_to_wide<-function(dt, varnames, valid_levels=NULL, valid_varnames=NU
       valid_varnames <- valid_varnames[valid_levels %in% common_elements]
       if(length(valid_varnames)!=length(common_elements))
       {
+        browser()
         stop(paste0("valid_varnames must have the same length as valid_levels, i.e. size of ", length(valid_levels)))
       }
     }
@@ -915,13 +916,20 @@ launch_conv_to_wide<-function(dt, varnames, valid_levels=NULL, valid_varnames=NU
                 levels_to_ignore=levels_to_ignore,
                 flag_remove_original_fields=flag_remove_original_fields))
   }
-  return(parallel::mcparallel(prepare_conv_to_wide(dt=dt, varnames = varnames,
+  return(prepare_conv_to_wide(dt=dt, varnames = varnames,
                                                    valid_levels = valid_levels,
                                                    valid_varnames = valid_varnames,
                                                    valid_labels = valid_labels,
                                                    labels = labels,
                                                    levels_to_ignore = levels_to_ignore,
-                                                   flag_remove_original_fields = flag_remove_original_fields)))
+                                                   flag_remove_original_fields = flag_remove_original_fields))
+  # return(parallel::mcparallel(prepare_conv_to_wide(dt=dt, varnames = varnames,
+  #                                                  valid_levels = valid_levels,
+  #                                                  valid_varnames = valid_varnames,
+  #                                                  valid_labels = valid_labels,
+  #                                                  labels = labels,
+  #                                                  levels_to_ignore = levels_to_ignore,
+  #                                                  flag_remove_original_fields = flag_remove_original_fields)))
 }
 
 
