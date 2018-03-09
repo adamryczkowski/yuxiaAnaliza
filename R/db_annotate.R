@@ -1,5 +1,5 @@
 
-annotate_db<-function(dt, flag_only_fix_attributes=FALSE, kodowanieECpath='shared/kodowanieEC.xlsx')
+annotate_db<-function(dt, flag_only_fix_attributes=FALSE, kodowanieECpath='shared/kodowanieEC.xlsx', zamiany_zmiennych_path='shared/Zamiany_zmiennych.ods')
 {
   if (!flag_only_fix_attributes) {
     SlownikNazwRegionow<-  {
@@ -611,11 +611,14 @@ annotate_db<-function(dt, flag_only_fix_attributes=FALSE, kodowanieECpath='share
     dt[,m_preg_place2:=NULL]
   }
 
-  recode_wady<-function(dt, flag_only_fix_attributes, kodowanieECpath)
+  recode_wady<-function(dt, flag_only_fix_attributes, kodowanieECpath, zamiany_zmiennych_path)
   {
     #  dt<-readRDS('db_fixed.rds')
     library(xlsx)
     if(!file.exists(kodowanieECpath)) {
+      browser()
+    }
+    if(!file.exists(zamiany_zmiennych_path)) {
       browser()
     }
     keys_dt<-xlsx::read.xlsx2(kodowanieECpath, sheetIndex = 1)
@@ -655,7 +658,6 @@ annotate_db<-function(dt, flag_only_fix_attributes=FALSE, kodowanieECpath='share
                                     valid_levels = as.integer(as.character(keys_dt$key_2003)),
                                     valid_varnames = paste0('cong_dis_',as.character(keys_dt$key_2003)),
                                     flag_remove_original_fields = TRUE)
-      browser()
       dt_2001<-conv_to_wide_from_odp(parallel_odp = fdt_2001, dt = cong_dis_2001_dt)
       rm(cong_dis_2001_dt)
       dt_2002a<-conv_to_wide_from_odp(parallel_odp = fdt_2002a, dt = cong_dis_2002a_dt)
@@ -670,7 +672,7 @@ annotate_db<-function(dt, flag_only_fix_attributes=FALSE, kodowanieECpath='share
       dt_all_bak <- data.table::copy(dt_all)
       rm(dt_2001); rm(dt_2002a); rm(dt_2002b); rm(dt_2003)
 
-      duplikaty<-readODS::read_ods('shared/Zamiany_zmiennych.ods')
+      duplikaty<-readODS::read_ods(zamiany_zmiennych_path)
 
       data.table::setorder(dt_all,id)
       data.table::setorder(dt, id)
@@ -721,7 +723,8 @@ annotate_db<-function(dt, flag_only_fix_attributes=FALSE, kodowanieECpath='share
 
   }
 
-  dt <- recode_wady(dt, flag_only_fix_attributes = flag_only_fix_attributes, kodowanieECpath = kodowanieECpath)
+  dt <- recode_wady(dt, flag_only_fix_attributes = flag_only_fix_attributes, kodowanieECpath = kodowanieECpath,
+                    zamiany_zmiennych_path=zamiany_zmiennych_path)
 
 
   if (!flag_only_fix_attributes) {
@@ -916,20 +919,13 @@ launch_conv_to_wide<-function(dt, varnames, valid_levels=NULL, valid_varnames=NU
                 levels_to_ignore=levels_to_ignore,
                 flag_remove_original_fields=flag_remove_original_fields))
   }
-  return(prepare_conv_to_wide(dt=dt, varnames = varnames,
+  return(parallel::mcparallel(prepare_conv_to_wide(dt=dt, varnames = varnames,
                                                    valid_levels = valid_levels,
                                                    valid_varnames = valid_varnames,
                                                    valid_labels = valid_labels,
                                                    labels = labels,
                                                    levels_to_ignore = levels_to_ignore,
-                                                   flag_remove_original_fields = flag_remove_original_fields))
-  # return(parallel::mcparallel(prepare_conv_to_wide(dt=dt, varnames = varnames,
-  #                                                  valid_levels = valid_levels,
-  #                                                  valid_varnames = valid_varnames,
-  #                                                  valid_labels = valid_labels,
-  #                                                  labels = labels,
-  #                                                  levels_to_ignore = levels_to_ignore,
-  #                                                  flag_remove_original_fields = flag_remove_original_fields)))
+                                                   flag_remove_original_fields = flag_remove_original_fields)))
 }
 
 
