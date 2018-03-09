@@ -9,7 +9,9 @@ readxls<-function() {
 
 readdb<-function() {
   rawdt<-readxlsx()
-  ans<-annotate_db(rawdt)
+  #kodowanieECpath<-'shared/kodowanieEC.xlsx'
+  kodowanieECpath<-system.file('kodowanieEC.xlsx', package = 'yuxiaAnaliza')
+  ans<-annotate_db(rawdt, kodowanieECpath=kodowanieECpath)
   dt_fixed <- ans$dt
   SlownikNazwRegionow <- ans$SlownikNazwRegionow
 
