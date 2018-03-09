@@ -14,7 +14,8 @@ Depends:
 	  dplyr,
 	  dtplyr,
 	  ggplot2,
-	  purrr
+	  purrr,
+	  car
 Remotes:
 	 adamryczkowski/depwalker,
 	 adamryczkowski/relationshipMatrix,

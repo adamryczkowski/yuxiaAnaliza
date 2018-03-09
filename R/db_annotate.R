@@ -369,11 +369,18 @@ annotate_db<-function(dt, flag_only_fix_attributes=FALSE)
     dt[pregtype==1,pregtype_gr:=as.integer(1)]
     dt[pregtype>1,pregtype_gr:=as.integer(2)]
     dt[,pregtype_gr:=factor(dt$pregtype_gr, levels=c(1,2), labels=c('Ciąża jednopłodowa', 'Ciąża wielopłodowa'))]
-
-
   }
   setattr(dt$pregtype, 'label', 'Liczba płodów')
   setattr(dt$pregtype_gr, 'label', 'Wielopłodowość')
+
+  if (!flag_only_fix_attributes) {
+    dt[pregtype==1,pregtype_gr2:=as.integer(1)]
+    dt[pregtype==2,pregtype_gr2:=as.integer(2)]
+    dt[pregtype>2,pregtype_gr2:=as.integer(3)]
+    dt[,pregtype_gr2:=factor(dt$pregtype_gr2, levels=c(1,2,3), labels=c('Pojedyncze', 'Dwojacze', 'Trojacze lub większe'))]
+  }
+
+
   setattr(dt$pregtype_gr2, 'label', 'Liczba płodów')
 
 
