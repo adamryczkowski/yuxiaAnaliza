@@ -1,5 +1,5 @@
 
-annotate_db<-function(dt, flag_only_fix_attributes=FALSE)
+annotate_db<-function(dt, flag_only_fix_attributes=FALSE, kodowanieECpath='shared/kodowanieEC.xlsx')
 {
   if (!flag_only_fix_attributes) {
     SlownikNazwRegionow<-  {
@@ -611,11 +611,14 @@ annotate_db<-function(dt, flag_only_fix_attributes=FALSE)
     dt[,m_preg_place2:=NULL]
   }
 
-  recode_wady<-function(dt, flag_only_fix_attributes)
+  recode_wady<-function(dt, flag_only_fix_attributes, kodowanieECpath)
   {
     #  dt<-readRDS('db_fixed.rds')
     library(xlsx)
-    keys_dt<-xlsx::read.xlsx2('shared/kodowanieEC.xlsx', sheetIndex = 1)
+    if(!file.exists(kodowanieECpath)) {
+      browser()
+    }
+    keys_dt<-xlsx::read.xlsx2(kodowanieECpath, sheetIndex = 1)
     keys_dt <- (keys_dt %>% filter(keys_dt$label != 'BŁĄD' & keys_dt$label != 'NA'))
 
     if (!flag_only_fix_attributes) {
