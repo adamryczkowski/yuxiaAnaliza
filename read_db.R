@@ -8,7 +8,7 @@ readxls<-function() {
 }
 
 readdb<-function() {
-  rawdt<-readxlsx()
+  rawdt<-readxls()
   #kodowanieECpath<-'shared/kodowanieEC.xlsx'
   kodowanieECpath<-system.file('kodowanieEC.xlsx', package = 'yuxiaAnaliza')
   zamiany_zmiennych_path<-system.file('Zamiany_zmiennych.ods', package = 'yuxiaAnaliza')
@@ -16,5 +16,10 @@ readdb<-function() {
   ans<-annotate_db(rawdt, kodowanieECpath=kodowanieECpath, zamiany_zmiennych_path=zamiany_zmiennych_path)
   dt_fixed <- ans$dt
   SlownikNazwRegionow <- ans$SlownikNazwRegionow
+  return(dt_fixed)
+}
 
+readsgalga<-function() {
+  dt_fixed<-readdb()
+  dt_lgasga<-apply_sga_lga(dt_fixed)
 }
