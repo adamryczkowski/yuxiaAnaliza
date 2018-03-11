@@ -1,6 +1,9 @@
 #Here we define all the Aggregate types
 
 dimorphism1_fun<-function(dt, i, j=1){
+  if(is.data.table(dt)) {
+    dt<-data.table(dt)
+  }
   stats <- dt[i,list(m = mean(preg_weight, na.rm=TRUE), sd = sd(preg_weight, na.rm=TRUE), n=sum(!is.na(preg_weight)) ), by='sex']
   ib <- which(stats$sex == '♂')
   ig <- which(stats$sex == '♀')
@@ -23,6 +26,9 @@ dimorphism1_fun<-function(dt, i, j=1){
 }
 
 dimorphism1_fun2<-function(dt, i){
+  if(is.data.table(dt)) {
+    dt<-data.table(dt)
+  }
   stats <- dt[i,list(m = mean(preg_weight, na.rm=TRUE), sd = sd(preg_weight, na.rm=TRUE), n=sum(!is.na(preg_weight)) ), by='sex']
   ib <- which(stats$sex == '♂')
   ig <- which(stats$sex == '♀')
@@ -39,6 +45,9 @@ dimorphism1_fun2<-function(dt, i){
 
 
 dimorphism2_fun<-function(dt,i){
+  if(is.data.table(dt)) {
+    dt<-data.table(dt)
+  }
   stats <- dt[i,list(m = mean(preg_weight, na.rm=TRUE), sd = sd(preg_weight, na.rm=TRUE), n=sum(!is.na(preg_weight)) ), by='sex']
   ib <- which(stats$sex == '♂')
   ig <- which(stats$sex == '♀')
@@ -62,6 +71,10 @@ dimorphism2_fun<-function(dt,i){
 }
 
 dimorphism2_fun2<-function(dt,i){
+  if(is.data.table(dt)) {
+    dt<-data.table(dt)
+  }
+
   stats <- dt[i,list(m = mean(preg_weight, na.rm=TRUE), sd = sd(preg_weight, na.rm=TRUE), n=sum(!is.na(preg_weight)) ), by='sex']
   ib <- which(stats$sex == '♂')
   ig <- which(stats$sex == '♀')
@@ -78,6 +91,9 @@ dimorphism2_fun2<-function(dt,i){
 }
 
 prop_plci_fn<-function(dt, i){
+  if(is.data.table(dt)) {
+    dt<-data.table(dt)
+  }
   stats <- dt[i,list(n=.N), by='sex']
   ib <- which(stats$sex == '♂')
   ig <- which(stats$sex == '♀')
@@ -100,6 +116,10 @@ prop_plci_fn<-function(dt, i){
 }
 
 prop_plci_fun2<-function(dt, i){
+  if(is.data.table(dt)) {
+    dt<-data.table(dt)
+  }
+
   stats <- dt[i,list(n=.N), by='sex']
   ib <- which(stats$sex == '♂')
   ig <- which(stats$sex == '♀')
@@ -120,6 +140,10 @@ prop_plci_fun2<-function(dt, i){
 
 
 prop_death_fun<-function(dt, i){
+  if(is.data.table(dt)) {
+    dt<-data.table(dt)
+  }
+  browser()
   stats <- dt[i,list(n=.N), by='death']
   ib <- which(stats$death == 'Martwo urodzony')
   ig <- which(stats$death == 'Żywo urodzony')
@@ -142,6 +166,9 @@ prop_death_fun<-function(dt, i){
 }
 
 prop_death_fun2<-function(dt, i){
+  if(is.data.table(dt)) {
+    dt<-data.table(dt)
+  }
   stats <- dt[i,list(n=.N), by='death']
   ib <- which(stats$death == 'Martwo urodzony')
   ig <- which(stats$death == 'Żywo urodzony')
