@@ -10,7 +10,8 @@ License: What license is it under?
 Encoding: UTF-8
 LazyData: true
 Depends:
-	  data.table
+	  data.table,
+	  relationshipMatrix
 Imports:
 	  dplyr,
 	  dtplyr,
