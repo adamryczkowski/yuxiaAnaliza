@@ -23,3 +23,4 @@ readsgalga<-function() {
   dt_fixed<-readdb()
   dt_lgasga<-apply_sga_lga(dt_fixed)
 }
+db<-readRDS('db.rds')

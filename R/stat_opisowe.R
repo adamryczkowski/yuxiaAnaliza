@@ -159,7 +159,7 @@ gen_stat_opisowe<-function(DT) {
   descrs[,mode_txt:=map2_chr(name, mode,
                              function(varname, mode) {
                                var<-DT[[varname]]
-                               ans<-danesurowe::GetLabelToValue(var, mode)
+                               ans<-danesurowe::ValueToLabel(var, mode)
                                if(length(ans)==0){
                                  typ <- danesurowe::class2vartype(var)
                                  if(typ=='D') {
@@ -174,7 +174,7 @@ gen_stat_opisowe<-function(DT) {
   descrs[,median_txt:=map2_chr(name, median,
                                function(varname, mode) {
                                  var<-DT[[varname]]
-                                 ans<-danesurowe::GetLabelToValue(var, mode)
+                                 ans<-danesurowe::ValueToLabel(var, mode)
                                  if(length(ans)==0){
                                    typ <- danesurowe::class2vartype(var)
                                    if(typ=='D') {
@@ -321,11 +321,11 @@ yuxia_raport_stat_opisowych<-function(rap, level=1, flag_gen_header=FALSE) {
 
   rap$add.paragraph(pander::pandoc.header.return("Zmienne porządkowe", level=level+1))
   ans<-report_stat_opisowe(descrs %>% filter(type %in% c('O') & name %in% other_vars),dt=dt[,..other_vars])
-  rap$add.paragraph(add_simple_table(ans$table, caption = ans$caption))
+  rap$add.paragraph(relationshipMatrix::add_simple_table(ans$table, caption = ans$caption))
 
   rap$add.paragraph(pander::pandoc.header.return("Zmienne przedziałowe", level=level+1))
   ans<-report_stat_opisowe(descrs %>% filter(type %in% c('I', 'N', 'D') & name %in% other_vars),dt=dt[,..other_vars])
-  rap$add.paragraph(add_simple_table(ans$table, caption = ans$caption))
+  rap$add.paragraph(relationshipMatrix::add_simple_table(ans$table, caption = ans$caption))
 
 
   rap$add.paragraph(pander::pandoc.header.return("Występowanie wad płodu", level=level+1))
@@ -338,7 +338,7 @@ yuxia_raport_stat_opisowych<-function(rap, level=1, flag_gen_header=FALSE) {
 
   for(gr in groups){
     ans<-report_stat_opisowe(descrs %>% filter(name %in% gr), dt=dt)
-    rap$add.paragraph(add_simple_table(ans$table, caption = ans$caption))
+    rap$add.paragraph(relationshipMatrix::add_simple_table(ans$table, caption = ans$caption))
   }
 
 
@@ -347,7 +347,7 @@ yuxia_raport_stat_opisowych<-function(rap, level=1, flag_gen_header=FALSE) {
   #  vars<-setdiff(vars, selvars)
   vars<-descrs$name[var_filters$`^m_risk_f`]
   ans<-report_stat_opisowe(descrs %>% filter(name %in% vars), dt=dt)
-  rap$add.paragraph(add_simple_table(ans$table, caption = ans$caption))
+  rap$add.paragraph(relationshipMatrix::add_simple_table(ans$table, caption = ans$caption))
 
 
   rap$add.paragraph(pander::pandoc.header.return("Występowanie powikłań okołoporodowych", level=level+1))
@@ -355,15 +355,28 @@ yuxia_raport_stat_opisowych<-function(rap, level=1, flag_gen_header=FALSE) {
   #  vars<-setdiff(vars, selvars)
   vars<-descrs$name[var_filters$`^b_cmpl`]
   ans<-report_stat_opisowe(descrs %>% filter(name %in% vars), dt=dt)
-  rap$add.paragraph(add_simple_table(ans$table, caption = ans$caption))
+  rap$add.paragraph(relationshipMatrix::add_simple_table(ans$table, caption = ans$caption))
 
   rap$add.paragraph(pander::pandoc.header.return("Zastosowane procedury medyczne podczas porodu", level=level+1))
   #  selvars<-as.character(na.omit(stringr::str_extract(vars, 'm_proc_.*')))
   #  vars<-setdiff(vars, selvars)
   vars<-descrs$name[var_filters$`^m_proc`]
   ans<-report_stat_opisowe(descrs %>% filter(name %in% vars), dt=dt)
-  rap$add.paragraph(add_simple_table(ans$table, caption = ans$caption))
+  rap$add.paragraph(relationshipMatrix::add_simple_table(ans$table, caption = ans$caption))
 
   return(rap)
 }
 
+myfreqs<-function(dt) {
+  rap<-prepare_report()
+  vars<-names(dt)
+  struct_df<-danesurowe::create_df_from_df_structure(dt)
+  struct_df$class_letter<-map_chr(dt, danesurowe::class2vartype)
+  struct_df<-struct_df %>% filter(class_letter %in% c('F'))
+  varnames<-struct_df$colname
+  for(varname in varnames){
+    msg<-capture.output(print(summarytools::freq(x = dt[[varname]], style='rmarkdown')))
+    rap$add.paragraph(msg)
+  }
+  save_report(rap, filename='freqs')
+}
