@@ -1,0 +1,6 @@
+dt<-readRDS('db.rds')
+dt_structure<-danesurowe::create_df_from_df_structure(dt, flag_include_vartype = TRUE)
+aggrt<-allAggregates()
+macierze_path<-system.file('macierze_analiz.xlsx', package='yuxiaAnaliza')
+m<-relationshipMatrix::read_matrix(macierze_path, data.table(dt_structure), aggregate_types = aggrt)
+library(data.table)
