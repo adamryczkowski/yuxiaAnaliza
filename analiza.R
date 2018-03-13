@@ -8,11 +8,12 @@ cl<-yuxiaCharts::classify_analyses(m)
 tododf<-cl$tododf
 subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('boxplot_wyliczany', 'crosstab', 'boxplot')))
 subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('boxplot')))
-doc<-relationshipMatrix::render_matrix(cellsdf=subset_df[1:10,], author="Adam", title="analiza",
+subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('boxplot_wyliczany')))
+doc<-relationshipMatrix::render_matrix(cellsdf=subset_df, author="Adam", title="Boxploty",
                                        stats_dispatchers=cl$dispatchers,
                                        report_dispatchers=list(),
                                        report_functions=list(),
-                                       aggregates=aggrt, filters=get_filters(), df_task=dt)
+                                       aggregates=aggrt, filters=yuxiaAnaliza::get_filters(), df_task=dt)
 doc<-relationshipMatrix::render_matrix(cellsdf=subset_df[132:133,], author="Adam", title="analiza",
                                        stats_dispatchers=cl$dispatchers,
                                        report_dispatchers=list(),
@@ -23,7 +24,7 @@ doc$set_property('chart_postprocess', FALSE)
 doc$pre_render()
 saveRDS(doc, file='doc2.rds', compress='xz')
 pandoc<-pander::Pandoc$new()
-doc<-readRDS('doc.rds')
+doc<-readRDS('doc2.rds')
 rm(dt)
 rm(cl)
 gc()
