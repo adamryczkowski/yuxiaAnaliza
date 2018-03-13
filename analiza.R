@@ -9,12 +9,12 @@ tododf<-cl$tododf
 subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('boxplot_wyliczany', 'crosstab', 'boxplot')))
 subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('boxplot')))
 subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('boxplot_wyliczany')))
-doc<-relationshipMatrix::render_matrix(cellsdf=subset_df, author="Adam", title="Boxploty",
+doc<-relationshipMatrix::render_matrix(cellsdf=subset_df, author="Adam", title="Boxploty wyliczane",
                                        stats_dispatchers=cl$dispatchers,
                                        report_dispatchers=list(),
                                        report_functions=list(),
                                        aggregates=aggrt, filters=yuxiaAnaliza::get_filters(), df_task=dt)
-doc<-relationshipMatrix::render_matrix(cellsdf=subset_df[132:133,], author="Adam", title="analiza",
+doc<-relationshipMatrix::render_matrix(cellsdf=subset_df[50:50,], author="Adam", title="analiza",
                                        stats_dispatchers=cl$dispatchers,
                                        report_dispatchers=list(),
                                        report_functions=list(),
@@ -22,7 +22,7 @@ doc<-relationshipMatrix::render_matrix(cellsdf=subset_df[132:133,], author="Adam
 doc$set_property('chart_debug', TRUE)
 doc$set_property('chart_postprocess', FALSE)
 doc$pre_render()
-saveRDS(doc, file='doc2.rds', compress='xz')
+saveRDS(doc, file='doc_boxploty_wyliczane.rds', compress='xz')
 pandoc<-pander::Pandoc$new()
 doc<-readRDS('doc2.rds')
 rm(dt)
