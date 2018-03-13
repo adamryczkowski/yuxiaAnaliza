@@ -1,11 +1,3 @@
-#TODO
-#OK 1. Przekazywanie parametrów do renderowanego dokumentu. Jednym z nich będzie flaga włączająca dodatkowe informacje dot. wklejonego wykresu, takie jak nazwa pliku. Inną będzie flaga dodająca wewnętrzne nazwy porównywanych zmiennych i lokalizację komórki w macierzach zależności. Obie ułatwią nam debugowanie
-#2. Kod łączący kilka policzonych raportów w jeden.
-#3. Błąd z lokalizacjami rozdziałów. Nie powinno być tak, że wszystkie analizy zeszły do jednego rozdziału
-#4. Problem z niektórymi wykresami mozaikowymi, gdzie wyszły same zera. Ale dopóki nie rozwiążę #1, trudno będzie ten wykres znaleźć
-#5. duplikacja mozajkowych. Powinny być 2 mozaikowe, ale nie identyczne, ale jeden ma być transpozycją drugiego
-
-
 library(data.table)
 dt<-readRDS('db.rds')
 dt_structure<-danesurowe::create_df_from_df_structure(dt, flag_include_vartype = TRUE)

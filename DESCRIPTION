@@ -11,7 +11,8 @@ Encoding: UTF-8
 LazyData: true
 Depends:
 	  data.table,
-	  yuxiaCharts
+	  yuxiaCharts,
+          relationshipMatrix
 Imports:
 	  dplyr,
 	  dtplyr,
