@@ -8,7 +8,7 @@ cl<-yuxiaCharts::classify_analyses(m)
 tododf<-cl$tododf
 subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('boxplot_wyliczany', 'crosstab', 'boxplot')))
 subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('boxplot')))
-doc<-relationshipMatrix::render_matrix(cellsdf=subset_df[1:100,], author="Adam", title="analiza",
+doc<-relationshipMatrix::render_matrix(cellsdf=subset_df[1:10,], author="Adam", title="analiza",
                                        stats_dispatchers=cl$dispatchers,
                                        report_dispatchers=list(),
                                        report_functions=list(),
