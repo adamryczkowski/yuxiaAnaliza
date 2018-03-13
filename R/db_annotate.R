@@ -483,7 +483,7 @@ annotate_db<-function(dt, flag_only_fix_attributes=FALSE, kodowanieECpath='share
     var<-rekoduj(dt$m_orig_nat, levels_from=kraje[,2], levels_to=kraje[,5])
     dt[,m_orig_2:=var]
 
-    main_cat<-c('Tajwan','ChRL','Wietnam','Indonezja','Filipiny','Tajlandia')
+    main_cat<-c('Tajwan','ChRL','Wietnam','Indonezja', 'Kambodża', 'Filipiny')
     var<-dt$m_orig_nat_gr
     var[var %in% setdiff(levels(var), main_cat)]<-NA
     dt[,m_orig_nat_largest:=factor(var)]
