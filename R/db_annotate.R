@@ -554,9 +554,9 @@ annotate_db<-function(dt, flag_only_fix_attributes=FALSE, kodowanieECpath='share
     apgar1[apgar1=='X'] <- NA
 
     apgar_labels<-c(
-      '3-0 punktów'=3,
-      '6-4 punkty'=6,
-      '10-7 punktów'=10)
+      '0-3 punktów'=3,
+      '4-6 punkty'=6,
+      '7-10 punktów'=10)
 
     dt[,apgar1_gr:=cut(suppressWarnings(as.integer(dt$apgar1)),
                        breaks=c(-1,apgar_labels), labels=names(apgar_labels), ordered_result = TRUE)]
