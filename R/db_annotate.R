@@ -197,7 +197,7 @@ annotate_db<-function(dt, flag_only_fix_attributes=FALSE, kodowanieECpath='share
   #Poniższe przedziały są traktowane jako zamknięte z prawej strony
   if (!flag_only_fix_attributes) {
     weight_labels<-c(
-      TO_LOW_TO_BE_REAL=10,
+      TOO_LOW_TO_BE_REAL=10,
       ILBW=750,
       ELBW=1000,
       VLBW=1500,
@@ -302,7 +302,7 @@ annotate_db<-function(dt, flag_only_fix_attributes=FALSE, kodowanieECpath='share
       '50-54 lat'=55-0.001,
       '55 lat i więcej'=max(dt$m_age)
     )
-    dt[,m_age_gr:=cut(dt$m_age, breaks=weeks_gr, labels=names(weeks_gr[-1]), ordered_result = TRUE)]
+    dt[,m_age_gr:=cut(dt$m_age, breaks=age_gr, labels=names(age_gr[-1]), ordered_result = TRUE)]
   }
   setattr(dt$m_age_gr, 'label', 'Przedział wieku matki')
   setattr(dt$m_age_gr, 'f.o.b', 2) #zmienna porządkowa
