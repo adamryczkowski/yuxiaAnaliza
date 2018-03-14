@@ -1,5 +1,6 @@
 library(data.table)
 dt<-readRDS('db.rds')
+#debugonce(danesurowe::create_df_from_df_structure)
 dt_structure<-danesurowe::create_df_from_df_structure(dt, flag_include_vartype = TRUE)
 aggrt<-yuxiaAnaliza::allAggregates()
 macierze_path<-system.file('macierze_analiz.xlsx', package='yuxiaAnaliza')
@@ -14,7 +15,7 @@ doc<-relationshipMatrix::render_matrix(cellsdf=subset_df, author="Adam", title="
                                        report_dispatchers=list(),
                                        report_functions=list(),
                                        aggregates=aggrt, filters=yuxiaAnaliza::get_filters(), df_task=dt)
-doc<-relationshipMatrix::render_matrix(cellsdf=subset_df[132:133,], author="Adam", title="analiza",
+doc<-relationshipMatrix::render_matrix(cellsdf=subset_df[13:13,], author="Adam", title="analiza",
                                        stats_dispatchers=cl$dispatchers,
                                        report_dispatchers=list(),
                                        report_functions=list(),

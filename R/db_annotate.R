@@ -387,7 +387,7 @@ annotate_db<-function(dt, flag_only_fix_attributes=FALSE, kodowanieECpath='share
   if (!flag_only_fix_attributes) {
     dt[,b_order:=as.ordered(dt$b_order)]
   }
-  setattr(dt$b_order, 'label', 'Kolejność urodzenia w ciąży bliźniaczej')
+  setattr(dt$b_order, 'label', 'Kolejność urodzenia w ciąży mnogiej')
   setattr(dt$b_order, 'f.o.b', 2)
 
   if (!flag_only_fix_attributes) {
