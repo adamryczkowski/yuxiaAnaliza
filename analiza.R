@@ -10,7 +10,10 @@ tododf<-cl$tododf
 subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('boxplot_wyliczany', 'crosstab', 'boxplot')))
 subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('boxplot')))
 subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('boxplot_wyliczany')))
-doc<-relationshipMatrix::render_matrix(cellsdf=subset_df, author="Adam", title="Boxploty",
+subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('crosstab')))
+subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('ts_nominal')))
+
+doc<-relationshipMatrix::render_matrix(cellsdf=subset_df, author="Adam", title="Time series vs nominal",
                                        stats_dispatchers=cl$dispatchers,
                                        report_dispatchers=list(),
                                        report_functions=list(),
@@ -23,7 +26,7 @@ doc<-relationshipMatrix::render_matrix(cellsdf=subset_df[13:13,], author="Adam",
 doc$set_property('chart_debug', TRUE)
 doc$set_property('chart_postprocess', FALSE)
 doc$pre_render()
-saveRDS(doc, file='doc_boxploty_wyliczane.rds', compress='xz')
+saveRDS(doc, file='doc_boxploty.rds', compress='xz')
 pandoc<-pander::Pandoc$new()
 doc<-readRDS('doc2.rds')
 rm(dt)
