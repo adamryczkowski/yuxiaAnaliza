@@ -13,7 +13,11 @@ subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('boxplot_wyliczany
 subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('crosstab')))
 subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('ts_nominal')))
 
+<<<<<<< HEAD
 doc<-relationshipMatrix::render_matrix(cellsdf=subset_df, author="Adam", title="Nominal trend",
+=======
+doc<-relationshipMatrix::render_matrix(cellsdf=subset_df, author="Adam", title="Time series vs nominal",
+>>>>>>> 01f27a8e9687268c79e9053b6a25292a7aa1d090
                                        stats_dispatchers=cl$dispatchers,
                                        report_dispatchers=list(),
                                        report_functions=list(), header_depth_offset=4, flag_add_chapter_for_each_cell = FALSE,
@@ -31,7 +35,11 @@ doc<-relationshipMatrix::render_matrix(cellsdf=subset_df[c(46, 47, 49,  96, 97,9
 doc$set_property('chart_debug', TRUE)
 doc$set_property('chart_postprocess', FALSE)
 doc$pre_render()
+<<<<<<< HEAD
 saveRDS(doc, file='doc_crosstab.rds', compress='xz')
+=======
+saveRDS(doc, file='doc_boxploty.rds', compress='xz')
+>>>>>>> 01f27a8e9687268c79e9053b6a25292a7aa1d090
 pandoc<-pander::Pandoc$new()
 doc<-readRDS('doc2.rds')
 rm(dt)

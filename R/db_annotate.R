@@ -290,7 +290,7 @@ annotate_db<-function(dt, flag_only_fix_attributes=FALSE, kodowanieECpath='share
 
   if (!flag_only_fix_attributes) {
     age_gr<-c(
-      '.'=(min(dt$m_age)-1),
+      '.'=(min(dt$m_age, na.rm=TRUE)-1),
       '14 lat i mniej'=15-0.001,
       '15-19 lat'=20-0.001,
       '20-24 lat'=25-0.001,
@@ -300,7 +300,7 @@ annotate_db<-function(dt, flag_only_fix_attributes=FALSE, kodowanieECpath='share
       '40-44 lat'=45-0.001,
       '45-49 lat'=50-0.001,
       '50-54 lat'=55-0.001,
-      '55 lat i więcej'=max(dt$m_age)
+      '55 lat i więcej'=max(dt$m_age, na.rm=TRUE)
     )
     dt[,m_age_gr:=cut(dt$m_age, breaks=age_gr, labels=names(age_gr[-1]), ordered_result = TRUE)]
   }
