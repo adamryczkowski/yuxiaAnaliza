@@ -10,20 +10,28 @@ tododf<-cl$tododf
 subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('boxplot_wyliczany', 'crosstab', 'boxplot')))
 subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('boxplot')))
 subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('boxplot_wyliczany')))
-doc<-relationshipMatrix::render_matrix(cellsdf=subset_df, author="Adam", title="Boxploty",
+subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('crosstab')))
+subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('ts_nominal')))
+
+doc<-relationshipMatrix::render_matrix(cellsdf=subset_df, author="Adam", title="Nominal trend",
                                        stats_dispatchers=cl$dispatchers,
                                        report_dispatchers=list(),
-                                       report_functions=list(),
+                                       report_functions=list(), header_depth_offset=4, flag_add_chapter_for_each_cell = FALSE,
                                        aggregates=aggrt, filters=yuxiaAnaliza::get_filters(), df_task=dt)
-doc<-relationshipMatrix::render_matrix(cellsdf=subset_df[13:13,], author="Adam", title="analiza",
+doc<-relationshipMatrix::render_matrix(cellsdf=subset_df[c(46),], author="Adam", title="analiza",
                                        stats_dispatchers=cl$dispatchers,
                                        report_dispatchers=list(),
-                                       report_functions=list(),
+                                       report_functions=list(), flag_add_chapter_for_each_cell = FALSE,
+                                       aggregates=aggrt, filters=yuxiaAnaliza::get_filters(), df_task=dt)
+doc<-relationshipMatrix::render_matrix(cellsdf=subset_df[c(46, 47, 49,  96, 97,98,99,100),], author="Adam", title="analiza",
+                                       stats_dispatchers=cl$dispatchers,
+                                       report_dispatchers=list(),
+                                       report_functions=list(), flag_add_chapter_for_each_cell = FALSE,
                                        aggregates=aggrt, filters=yuxiaAnaliza::get_filters(), df_task=dt)
 doc$set_property('chart_debug', TRUE)
 doc$set_property('chart_postprocess', FALSE)
 doc$pre_render()
-saveRDS(doc, file='doc_boxploty_wyliczane.rds', compress='xz')
+saveRDS(doc, file='doc_crosstab.rds', compress='xz')
 pandoc<-pander::Pandoc$new()
 doc<-readRDS('doc2.rds')
 rm(dt)
