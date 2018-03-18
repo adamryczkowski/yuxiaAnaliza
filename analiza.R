@@ -18,17 +18,20 @@ dvs<-unique(unlist(subset_df$prefix2))
 doc_dir<-'/home/Adama-docs/Adam/MyDocs/Statystyka/Aktywne analizy/Yu Xia/yuxia-local/raportyAR/raporty/Podstawowe'
 chart_dir<-'/home/Adama-docs/Adam/MyDocs/Statystyka/Aktywne analizy/Yu Xia/yuxia-local/raportyAR/wykresy/Podstawowe'
 dv<-dvs[[1]]
+
 for(dv in dvs) {
   dv_df<-data.table(subset_df[purrr::map_lgl(subset_df$prefix2, ~ dv %in% unlist(.)),])
-  doc<-relationshipMatrix::render_matrix(cellsdf=dv_df[seq(2, nrow(dv_df)),], author="Adam", title=dv,
+  a<-which(dv_df$cellnr==570)
+  doc<-relationshipMatrix::render_matrix(cellsdf=dv_df[seq(20, 20),], author="Adam", title=dv,
                                          stats_dispatchers=cl$dispatchers,
                                          report_dispatchers=list(),
-                                         chart_foldername=chart_dir,
+                                         chart_foldername=pathcat::path.cat(chart_dir, paste0('ch_', which(dv %in% dvs))),
                                          report_functions=list(), header_depth_offset=4, flag_add_chapter_for_each_cell = FALSE,
                                          aggregates=aggrt, filters=yuxiaAnaliza::get_filters(), df_task=dt)
   doc$set_property('chart_debug', TRUE)
   doc$pre_render()
   saveRDS(doc, file=pathcat::path.cat(doc_dir, paste0('ch_', which(dv %in% dvs), '.rds')), compress='xz')
+  pandoc<-pander::Pandoc$new()
   doc$render(pandoc)
   save_report(pandoc,  filename = pathcat::path.cat(doc_dir, paste0('ch_', which(dv %in% dvs))))
 }

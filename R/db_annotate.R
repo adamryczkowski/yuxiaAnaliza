@@ -147,7 +147,7 @@ annotate_db<-function(dt, flag_only_fix_attributes=FALSE, kodowanieECpath='share
                  format='%Y.%m.%d')]
     dt[,birth_year_gr:=as.ordered(year(dt$birth))]
 
-    dt[,birth_month_gr:=factor(month(dt$birth), levels=1:12, labels=as.roman(1:12))]
+    dt[,birth_month_gr:=factor(month(dt$birth), levels=1:12, labels=c('Sty','Lut','Mar','Kwi','Maj','Cze','Lip','Sie','Wrz','Paz','Lis','Gru'))]
 
     dt[,birth_year:=as.numeric(difftime(birth,as.Date('0-1-1')))/365.24]
   }
