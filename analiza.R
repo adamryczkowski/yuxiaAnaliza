@@ -18,7 +18,6 @@ dvs<-unique(unlist(subset_df$prefix2))
 doc_dir<-'/home/Adama-docs/Adam/MyDocs/Statystyka/Aktywne analizy/Yu Xia/yuxia-local/raportyAR/raporty/Podstawowe'
 chart_dir<-'/home/Adama-docs/Adam/MyDocs/Statystyka/Aktywne analizy/Yu Xia/yuxia-local/raportyAR/wykresy/Podstawowe'
 dv<-dvs[[1]]
-
 for(dv in dvs) {
   dv_df<-data.table(subset_df[purrr::map_lgl(subset_df$prefix2, ~ dv %in% unlist(.)),])
   a<-which(dv_df$cellnr==570)
