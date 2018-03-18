@@ -17,12 +17,12 @@ subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('ts_trend')))
 dvs<-unique(unlist(subset_df$prefix2))
 doc_dir<-'/home/Adama-docs/Adam/MyDocs/Statystyka/Aktywne analizy/Yu Xia/yuxia-local/raportyAR/raporty/Podstawowe'
 chart_dir<-'/home/Adama-docs/Adam/MyDocs/Statystyka/Aktywne analizy/Yu Xia/yuxia-local/raportyAR/wykresy/Podstawowe'
-dv<-dvs[[1]]
+dv<-dvs[[2]]
 template<-system.file('D-rat.dotx', package = 'yuxiaAnaliza')
 for(dv in dvs) {
   dv_df<-data.table(subset_df[purrr::map_lgl(subset_df$prefix2, ~ dv %in% unlist(.)),])
   a<-which(dv_df$cellnr==570)
-  a<-2
+  a<-5
   doc<-relationshipMatrix::render_matrix(cellsdf=dv_df[a,], author="Adam", title=dv,
                                          stats_dispatchers=cl$dispatchers,
                                          report_dispatchers=list(),
