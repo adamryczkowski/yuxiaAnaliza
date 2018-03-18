@@ -22,7 +22,8 @@ template<-system.file('D-rat.dotx', package = 'yuxiaAnaliza')
 for(dv in dvs) {
   dv_df<-data.table(subset_df[purrr::map_lgl(subset_df$prefix2, ~ dv %in% unlist(.)),])
   a<-which(dv_df$cellnr==570)
-  doc<-relationshipMatrix::render_matrix(cellsdf=dv_df, author="Adam", title=dv,
+  a<-2
+  doc<-relationshipMatrix::render_matrix(cellsdf=dv_df[a,], author="Adam", title=dv,
                                          stats_dispatchers=cl$dispatchers,
                                          report_dispatchers=list(),
                                          chart_foldername=pathcat::path.cat(chart_dir, paste0('ch_', which(dv %in% dvs))),

@@ -22,8 +22,19 @@ save_report<-function(report, filename='/tmp/report', flag_open = TRUE, template
     opts<-paste0(' --template "', template, '"')
   }
   report$export(tmpfile, open=FALSE,
-                options=paste0('+RTS -K100000000 -RTS --filter pandoc-fignos --filter pandoc-tablenos ',
+                options=paste0(opts, ' +RTS -K100000000 -RTS --filter pandoc-fignos --filter pandoc-tablenos ',
                                '-M "tablenos-caption-name:Tabela" -M "fignos-caption-name:Rycina"', opts ))
-  file.rename(paste0(tmpfile,'.md'), paste0(filename, '.md'))
-  file.rename(paste0(tmpfile,'.', report$format), paste0(filename, '.', report$format))
+  file_move(paste0(tmpfile,'.md'), paste0(filename, '.md'))
+  file_move(paste0(tmpfile,'.', report$format), paste0(filename, '.', report$format))
+}
+
+file_move<-function(file_from, file_to) {
+  tryCatch(
+    file.rename(file_from, file_to),
+    warning = function(w) {
+      file.copy(file_from, file_to)
+      unlink(file_from)
+    }
+  )
+
 }
