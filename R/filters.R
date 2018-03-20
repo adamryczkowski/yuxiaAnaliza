@@ -10,14 +10,19 @@ get_filters<-function() {
     label="Cały zbiór danych"
   )
 
+  ans$filtr_pierwsze_dziecko<-relationshipMatrix::Filter$new(
+    filterstring="death == 'Żywo urodzony' & pregn_num == 1",
+    label="Pierworodne dzieci żywo urodzone"
+  )
+
   ans$filtr_dziecko2<-relationshipMatrix::Filter$new(
-    filterstring="death == 'Żywo urodzony' & pregn_num == 3",
-    label="Dzieci żywo urodzone z trzeciej ciąży"
+    filterstring="death == 'Żywo urodzony' & pregn_num == 2",
+    label="Dzieci żywo urodzone z drugiej ciąży"
   )
 
   ans$filtr_dziecko3<-relationshipMatrix::Filter$new(
-    filterstring="",
-    label="Cały zbiór danych"
+    filterstring="death == 'Żywo urodzony' & pregn_num == 3",
+    label="Dzieci żywo urodzone z trzeciej ciąży"
   )
 
   ans$filtr_dziecko4<-relationshipMatrix::Filter$new(
@@ -38,11 +43,6 @@ get_filters<-function() {
   ans$filtr_ciaze_pojedyncze_dziewczynki<-relationshipMatrix::Filter$new(
     filterstring="death == 'Żywo urodzony' & pregtype == 1 & sex =='♀'",
     label="Dziewczynki żywo urodzone w pojedynczej ciąży"
-  )
-
-  ans$filtr_pierwsze_dziecko<-relationshipMatrix::Filter$new(
-    filterstring="death == 'Żywo urodzony' & pregn_num == 1",
-    label="Pierworodne dzieci żywo urodzone"
   )
 
   ans$filtr_pierwsze_dziecko_chlopcy<-relationshipMatrix::Filter$new(
