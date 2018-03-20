@@ -43,7 +43,7 @@ for(dv in dvs) {
   save_report(pandoc, template = template,  filename = pathcat::path.cat(doc_dir, paste0('ch_', which(dvs %in% dv))))
 }
 
-doc<-relationshipMatrix::render_matrix(cellsdf=tododf, author="Adam", title="Time series vs nominal",
+doc<-relationshipMatrix::render_matrix(cellsdf=subset_df, author="Adam", title="Time series vs nominal",
                                        stats_dispatchers=cl$dispatchers,
                                        report_dispatchers=list(),
                                        report_functions=list(), header_depth_offset=4, flag_add_chapter_for_each_cell = FALSE,
@@ -71,4 +71,4 @@ gc()
 doc$render(pandoc)
 unlink('/tmp/cos.docx')
 unlink('/tmp/cos.md')
-save_report(pandoc, filename = pathcat::path.cat(doc_dir, 'rozdzialy'))
+save_report(pandoc, filename = '/tmp/cos')
