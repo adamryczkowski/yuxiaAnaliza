@@ -22,15 +22,16 @@ chart_dir<-'/home/Adama-docs/Adam/MyDocs/Statystyka/Aktywne analizy/Yu Xia/yuxia
 dv_dfs<-purrr::map(dvs, function(dv) data.table(subset_df[purrr::map_lgl(subset_df$prefix2, ~ dv %in% unlist(.)),]))
 
 dv_df10_groups<-split(dv_dfs[[10]], cut(seq_len(nrow(dv_dfs[[10]])), 3, FALSE))
+dvs<-c(dvs[1:9], paste0(rep(dvs[[10]], 3)," ", 1:3))
 
 list_tododf<-c(dv_dfs[1:9], dv_df10_groups)
 i<-1
 for(i in seq_along(list_tododf)) {
   dv_df<-list_tododf[[i]]
-  doc<-relationshipMatrix::render_matrix(cellsdf=dv_df, author="Adam", title=dv,
+  doc<-relationshipMatrix::render_matrix(cellsdf=dv_df, author="Adam", title=dvs[[i]],
                                          stats_dispatchers=cl$dispatchers,
                                          report_dispatchers=list(),
-                                         chart_foldername=pathcat::path.cat(chart_dir, paste0('ch_', which(dvs %in% dv))),
+                                         chart_foldername=pathcat::path.cat(chart_dir, paste0('ch_', i)),
                                          report_functions=list(), header_depth_offset=3, flag_add_chapter_for_each_cell = FALSE,
                                          aggregates=aggrt, filters=yuxiaAnaliza::get_filters(), df_task=dt)
   doc$set_property('chart_debug', TRUE)
