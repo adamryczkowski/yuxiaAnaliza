@@ -1,6 +1,7 @@
 library(data.table)
 dt<-readRDS('db.rds')
 #debugonce(danesurowe::create_df_from_df_structure)
+template<-system.file('D-rat.dotx', package = 'yuxiaAnaliza')
 dt_structure<-danesurowe::create_df_from_df_structure(dt, flag_include_vartype = TRUE)
 aggrt<-yuxiaAnaliza::allAggregates()
 macierze_path<-system.file('macierze_analiz.xlsx', package='yuxiaAnaliza')
@@ -17,17 +18,15 @@ subset_df<-data.table(dplyr::filter(tododf, dispatcher %in% c('ts_trend')))
 dvs<-unique(unlist(subset_df$prefix2))
 doc_dir<-'/home/Adama-docs/Adam/MyDocs/Statystyka/Aktywne analizy/Yu Xia/yuxia-local/raportyAR/raporty/Podstawowe'
 chart_dir<-'/home/Adama-docs/Adam/MyDocs/Statystyka/Aktywne analizy/Yu Xia/yuxia-local/raportyAR/wykresy/Podstawowe'
-dv<-dvs[[1]]
-template<-system.file('D-rat.dotx', package = 'yuxiaAnaliza')
-for(dv in dvs) {
-  dv_df<-data.table(subset_df[purrr::map_lgl(subset_df$prefix2, ~ dv %in% unlist(.)),])
-  dv_df_groups<-split(dv_df, cut(seq_len(nrow(dv_df)), 3, FALSE))
-  i<-1
-  for(i in seq_along(dv_df_groups)) {
-    dv_df<-dv_df_groups[[i]]
-  }
-  #  a<-which(dv_df$cellnr==570)
-  #  a<-5
+
+dv_dfs<-purrr::map(dvs, function(dv) data.table(subset_df[purrr::map_lgl(subset_df$prefix2, ~ dv %in% unlist(.)),]))
+
+dv_df10_groups<-split(dv_dfs[[10]], cut(seq_len(nrow(dv_dfs[[10]])), 3, FALSE))
+
+list_tododf<-c(dv_dfs[1:9], dv_df10_groups)
+i<-1
+for(i in seq_along(list_tododf)) {
+  dv_df<-list_tododf[[i]]
   doc<-relationshipMatrix::render_matrix(cellsdf=dv_df, author="Adam", title=dv,
                                          stats_dispatchers=cl$dispatchers,
                                          report_dispatchers=list(),
@@ -36,11 +35,11 @@ for(dv in dvs) {
                                          aggregates=aggrt, filters=yuxiaAnaliza::get_filters(), df_task=dt)
   doc$set_property('chart_debug', TRUE)
   doc$pre_render()
-  saveRDS(doc, file=pathcat::path.cat(doc_dir, paste0('ch_', which(dvs %in% dv), '.rds')), compress='xz')
+  saveRDS(doc, file=pathcat::path.cat(doc_dir, paste0('ch_', i, '.rds')), compress='xz')
   pandoc<-pander::Pandoc$new()
   doc$render(pandoc)
 
-  save_report(pandoc, template = template,  filename = pathcat::path.cat(doc_dir, paste0('ch_', which(dvs %in% dv))))
+  save_report(pandoc, template = template,  filename = pathcat::path.cat(doc_dir, paste0('ch_', i)))
 }
 
 doc<-relationshipMatrix::render_matrix(cellsdf=subset_df, author="Adam", title="Time series vs nominal",
