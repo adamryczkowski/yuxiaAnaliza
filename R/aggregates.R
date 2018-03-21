@@ -143,7 +143,7 @@ prop_death_fun<-function(dt, i){
   if(is.data.table(dt)) {
     dt<-data.table(dt)
   }
-  browser()
+  #browser()
   stats <- dt[i,list(n=.N), by='death']
   ib <- which(stats$death == 'Martwo urodzony')
   ig <- which(stats$death == 'Żywo urodzony')

@@ -26,7 +26,7 @@ dvs<-c(dvs[1:9], paste0(rep(dvs[[10]], 3)," ", 1:3))
 
 list_tododf<-c(dv_dfs[1:9], dv_df10_groups)
 i<-1
-for(i in seq_along(list_tododf)) {
+for(i in seq(7, length(list_tododf))) {
   dv_df<-list_tododf[[i]]
   doc<-relationshipMatrix::render_matrix(cellsdf=dv_df, author="Adam", title=dvs[[i]],
                                          stats_dispatchers=cl$dispatchers,

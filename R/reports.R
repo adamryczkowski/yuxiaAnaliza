@@ -20,6 +20,8 @@ save_report<-function(report, filename='/tmp/report', flag_open = TRUE, template
       browser()
     }
     opts<-paste0(' --template "', template, '"')
+  } else {
+    opts<-''
   }
   report$export(tmpfile, open=FALSE,
                 options=paste0(opts, ' +RTS -K100000000 -RTS --filter pandoc-fignos --filter pandoc-tablenos ',
