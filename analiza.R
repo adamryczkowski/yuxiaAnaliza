@@ -42,13 +42,13 @@ for(i in seq(7, length(list_tododf))) {
 
   save_report(pandoc, template = template,  filename = pathcat::path.cat(doc_dir, paste0('ch_', i)))
 }
-
-doc<-relationshipMatrix::render_matrix(cellsdf=subset_df, author="Adam", title="Time series vs nominal",
+#a1<-tododf %>% filter( dv.vartype=='F' & iv.vartype=='F' & ((iv.f.o.b==2 & dv.f.o.b==1) | (dv.f.o.b==2 & iv.f.o.b==1 )))
+doc<-relationshipMatrix::render_matrix(cellsdf=as.data.table(a), author="Adam", title="Time series vs nominal",
                                        stats_dispatchers=cl$dispatchers,
                                        report_dispatchers=list(),
                                        report_functions=list(), header_depth_offset=4, flag_add_chapter_for_each_cell = FALSE,
                                        aggregates=aggrt, filters=yuxiaAnaliza::get_filters(), df_task=dt)
-doc<-relationshipMatrix::render_matrix(cellsdf=subset_df[c(1),], author="Adam", title="analiza",
+doc<-relationshipMatrix::render_matrix(cellsdf=tododf[716,], author="Adam", title="analiza",
                                        stats_dispatchers=cl$dispatchers,
                                        report_dispatchers=list(),
                                        report_functions=list(), flag_add_chapter_for_each_cell = FALSE,
