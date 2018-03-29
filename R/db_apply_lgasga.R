@@ -18,8 +18,8 @@ sga_lga<-function(db, flag_male, flag_one, prefix='m3_') {
 
   df<-decorate_quantiles(m4 = readRDS(filename), mydt = mydt, varx = varx, vary = vary)$df
   df$perc<-as.numeric(df$perc)
-  dflo <- df %>% filter(perc>=0.03) %>% select(-perc)
-  dfhi <- df %>% filter(perc<=0.97) %>% select(-perc)
+  dflo <- df %>% filter(perc<=0.03) %>% select(-perc)
+  dfhi <- df %>% filter(perc>=0.97) %>% select(-perc)
 
   flags_lo<-as.numeric(approxfun(dflo$zn, dflo$zz)(mydt$preg_weeks)>mydt$preg_weight)
   sga<-factor(flags_lo+1,  labels = c("Noworodki nie-SGA", "Noworodki SGA"))
